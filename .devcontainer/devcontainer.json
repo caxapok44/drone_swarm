@@ -1,0 +1,11 @@
+{
+  "name": "drone_swarm - Ubuntu 22.04 (minimal)",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "remoteUser": "vscode",
+  "workspaceFolder": "/workspaces/drone_swarm"
+}
+
+
