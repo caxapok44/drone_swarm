@@ -1,16 +1,9 @@
-// io/json.h
-#pragma once
-#include <ostream>
-#include <sstream>
-#include <locale>
-#include "Result.h"
-
-// struct/GridAlgoConfig.h
 #pragma once
 
+// Configuration parameters for grid-based algorithms
 struct GridAlgoConfig {
-    int  totalSteps   = 1;   // >=1
-    int  timeBudgetMs = 0;   // >=0 (0 = без ліміту)
-    int  horizon      = 1;   // підтримуємо 1..2 (кліпиться в алгоритмі)
+    int  totalSteps   = 1;
+    int  timeBudgetMs = 0;  
+    int  horizon      = 1;   
     bool allowStay    = true;
 };

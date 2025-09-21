@@ -20,7 +20,7 @@ cmake --build --preset build-release
 
 Run example:
 ```bash
-./build/release/main_app \
+./build/release/app/main_app \
   --file data/20.txt \
   --steps 20 \
   --time_ms 1 \
@@ -32,6 +32,3 @@ OR
 ```bash
 ./build/release/app/main_app  --config config.ini 
 ```
-Notes:
-- Input files must use header + grid format (first line N, then N lines of N integers). See README for the exact format.
-- For very large files like `data/1000.txt`, prefer `--horizon 1` and adjust `--time_ms`.

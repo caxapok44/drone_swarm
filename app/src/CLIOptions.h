@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <filesystem>   // needed in header for Options
+#include <filesystem>
 
 struct Options {
     std::filesystem::path file;
@@ -35,7 +35,6 @@ public:
     [[nodiscard]] int    horizon()      const noexcept { return m_horizon; }
     [[nodiscard]] bool   allowStay()    const noexcept { return m_allowStay; }
 
-    // Build validated DTO
     [[nodiscard]] Options toOptions() const;
 
 private:

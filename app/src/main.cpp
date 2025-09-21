@@ -5,6 +5,8 @@
 #include "GridFileLoader.h"
 #include "struct/GridAlgoConfig.h"
 #include "GridAlgo.h"
+
+
 int main(int argc, char** argv) {
     try {
         CLIOptions opt(argc, argv);
@@ -15,7 +17,7 @@ int main(int argc, char** argv) {
 
         std::vector<Position> startPositions = { { opt.startX(), opt.startY() } };
 
-        auto loader = std::make_unique<GridFileLoader>(opt.filePath(),
+        std::unique_ptr<IGridLoader> loader = std::make_unique<GridFileLoader>(opt.filePath(),
                                                        opt.regrowthRate());
 
         GridAlgoConfig cfg{ opt.totalSteps(), opt.timeBudgetMs(), opt.horizon(), opt.allowStay() };

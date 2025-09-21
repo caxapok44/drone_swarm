@@ -19,7 +19,10 @@ bool CLIOptions::parseCLI() {
     for (int i = 1; i < argc; ++i) {
         std::string a = argv[i];
         if (a == "--config") {
-            if (i + 1 >= argc) throw std::runtime_error("Missing value for --config");
+            if (i + 1 >= argc)
+            {
+                throw std::runtime_error("Missing value for --config");
+            } 
             loadConfigFile(argv[++i]);
         }
     }
@@ -28,7 +31,10 @@ bool CLIOptions::parseCLI() {
     for (int i = 1; i < argc; ++i) {
         std::string a = argv[i];
         auto needValue = [&](const std::string& name) -> std::string {
-            if (i + 1 >= argc) throw std::runtime_error("Missing value for " + name);
+            if (i + 1 >= argc) 
+            {
+                throw std::runtime_error("Missing value for " + name);
+            }
             return std::string(argv[++i]);
         };
 
@@ -43,7 +49,7 @@ bool CLIOptions::parseCLI() {
         else if (a == "--allow-stay")    m_allowStay    = true;
         else if (a == "--config")        { ++i; continue; }
         else if (a == "-h" || a == "--help") {
-            return false; // caller should print usage() and exit 0
+            return false;
         }
         else if (!a.empty() && a[0] != '-') {
             m_filePath = a; // positional file
@@ -54,15 +60,28 @@ bool CLIOptions::parseCLI() {
     }
 
     // Required
-    if (m_filePath.empty())  throw std::runtime_error("Missing required option: --file <path>");
-    if (m_totalSteps <= 0)   throw std::runtime_error("--steps must be a positive integer");
-    if (m_timeBudgetMs <= 0) throw std::runtime_error("--time_ms must be a positive integer (milliseconds)");
+    if (m_filePath.empty())  
+    {
+        throw std::runtime_error("Missing required option: --file <path>");
+    }
+    if (m_totalSteps <= 0)   
+    {
+        throw std::runtime_error("--steps must be a positive integer");
+    }
+    if (m_timeBudgetMs <= 0) 
+    {
+        throw std::runtime_error("--time_ms must be a positive integer (milliseconds)");
+    }
 
     // Ranges
     if (m_horizon < 1 || m_horizon > 2)
+    {
         throw std::runtime_error("--horizon must be 1 or 2");
+    }
     if (m_regrowthRate < 0.0 || m_regrowthRate > 1.0)
+    {
         throw std::runtime_error("--regrowth_rate must be in [0.0, 1.0]");
+    }
 
     return true;
 }
@@ -73,19 +92,26 @@ bool CLIOptions::parseBool(const std::string& s) {
 
 void CLIOptions::loadConfigFile(const std::string& path) {
     std::ifstream in(path);
-    if (!in) throw std::runtime_error("Failed to open config file: " + path);
-
+    if (!in) 
+    {
+        throw std::runtime_error("Failed to open config file: " + path);
+    }
     std::string line;
-    while (std::getline(in, line)) {
+    while (std::getline(in, line)) 
+    {
         auto l = line.find_first_not_of("\t \r\n");
         auto r = line.find_last_not_of("\t \r\n");
-        if (l == std::string::npos) continue;
+        if (l == std::string::npos) {
+            continue;
+        }
         std::string trimmed = line.substr(l, r - l + 1);
-        if (trimmed.empty() || trimmed[0] == '#') continue;
-
+        if (trimmed.empty() || trimmed[0] == '#') {
+            continue;
+        }
         auto eq = trimmed.find('=');
-        if (eq == std::string::npos) continue;
-
+        if (eq == std::string::npos) {
+            continue;
+        }
         std::string key = trimmed.substr(0, eq);
         std::string val = trimmed.substr(eq + 1);
         auto l2 = key.find_first_not_of("\t \r\n");

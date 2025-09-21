@@ -9,19 +9,22 @@
 #include <array>
 
 std::span<const GridAlgo::Move> GridAlgo::buildMoves(bool allowStay) noexcept {
-    static constexpr std::array<Move,4> k4 {{
-        { 1, 0}, {-1, 0}, {0, 1}, {0,-1}
+    static constexpr std::array<Move,8> k8 {{
+        {-1,-1},{0,-1},{1,-1},
+        {-1, 0},        {1, 0},
+        {-1, 1},{0, 1},{1, 1}
     }};
-    static constexpr std::array<Move,5> k4s {{
-        { 1, 0}, {-1, 0}, {0, 1}, {0,-1}, {0,0}
+    static constexpr std::array<Move,9> k8s {{
+        {-1,-1},{0,-1},{1,-1},
+        {-1, 0},        {1, 0},
+        {-1, 1},{0, 1},{1, 1},
+        {0,0}
     }};
-    return allowStay ? std::span<const Move>(k4s) : std::span<const Move>(k4);
+    return allowStay ? std::span<const Move>(k8s) : std::span<const Move>(k8);
 }
-
 int GridAlgo::collectAndUpdate(Grid& grid, Drone& drone, int x, int y, int t) noexcept {
     const int gain = grid.valueAt(x, y, t);
     drone.moveTo(x, y, t, gain);
-    // prefer encapsulated mutation
     grid.markVisited(x, y, t);
     return gain;
 }
@@ -49,8 +52,8 @@ std::pair<int,int> GridAlgo::findBestMove(
             const std::size_t idx1 = Grid::idx(nx1, ny1, grid.N);
             for (auto [dx2, dy2] : moves) {
                 const auto p2 = drone.pos();
-                const int nx2 = nx1 + dx1;
-                const int ny2 = ny1 + dy1;
+                const int nx2 = nx1 + dx2;
+                const int ny2 = ny1 + dy2;
                 if (!grid.inBounds(nx2, ny2)) continue;
                 const int gain2 = grid.valueAtWithOverride(nx2, ny2, tNow + 1, idx1, tNow);
                 const long long twoStep = static_cast<long long>(gain1) + gain2;
@@ -104,7 +107,7 @@ RunResult GridAlgo::run(Grid& grid, std::span<Drone> drones, const GridAlgoConfi
             std::chrono::steady_clock::now() - tStart).count()
     );
 
-    // extract paths (no double-reserve)
+    // extract paths
     for (auto& d : drones) {
         result.paths.push_back(DronePath{ d.id(), d.path() });
     }

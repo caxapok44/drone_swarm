@@ -1,4 +1,3 @@
-// GridAlgo.h
 #pragma once
 #include <span>
 #include <vector>

@@ -3,7 +3,7 @@
 
 # Installation
 
-See `installation-steps.md` for step-by-step setup on Windows and Ubuntu.
+See `installation-steps.md` for step-by-step setup on Ubuntu.
 
 # Build and Run
 
@@ -17,7 +17,23 @@ cmake --preset ninja-release
 cmake --build --preset build-release
 ```
 
-The executable is `main_app` in `build/release/` (on Windows: `main_app.exe`).
+The executable is `main_app` in `build/release/`.
+
+## Tests
+
+```bash
+cmake --preset ninja-release
+
+cmake --build --preset build-release
+
+# Run all tests
+ctest --test-dir build/release -V
+
+```
+
+Notes:
+- The first configure will download GoogleTest (via FetchContent).
+- The smoke test `app_help_works` just runs `main_app --help`.
 
 ## Input format (header + grid)
 
@@ -37,9 +53,8 @@ Example (5x5):
 
 ## Run
 
-Linux/macOS:
 ```bash
-./build/release/main_app \
+./build/release/app/main_app \
   --file data/20.txt \
   --steps 500 \
   --time_ms 50 \
@@ -48,16 +63,6 @@ Linux/macOS:
   --horizon 2
 ```
 
-Windows (PowerShell):
-```powershell
-.\build\release\main_app.exe `
-  --file data\20.txt `
-  --steps 500 `
-  --time_ms 50 `
-  --start_x 10 --start_y 10 `
-  --regrowth_rate 0.2 `
-  --horizon 2
-```
 
 Flags:
 - `--file`: path to grid file
@@ -76,17 +81,19 @@ Program prints a JSON-like object with total score, steps returned (may be cut s
 - Receding-horizon greedy (1–2 steps) to balance immediate reward vs near-future gain.
 - Includes 8-neighborhood moves; optional stay-in-place.
 
-### Performance tips
-- On very large grids (e.g., `data/1000.txt`), use `--horizon 1` and a modest `--time_ms` to guarantee the time limit.
-- Start coordinates are zero-based: for `N=1000`, the center is `(500, 500)`.
 
-Example for `1000.txt` (Windows PowerShell):
-```powershell
-.\build\release\main_app.exe `
-  --file data\1000.txt `
-  --steps 5000 `
-  --time_ms 200 `
-  --start_x 500 --start_y 500 `
-  --regrowth_rate 0.2 `
-  --horizon 1
+Example for `1000.txt` :
+```bash
+./build/release/app/main_app \
+  --file data/1000.txt \
+  --steps 500 \
+  --time_ms 50 \
+  --start_x 10 --start_y 10 \
+  --regrowth_rate 0.2 \
+  --horizon 2
+```
+
+Example for with config argument :
+```bash
+./build/release/app/main_app --config config.ini
 ```

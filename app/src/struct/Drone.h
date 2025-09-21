@@ -19,7 +19,6 @@ public:
     }
 
     void moveTo(int newX, int newY, TimeStep timeStep, CellValue valueCollected) {
-        // assert(isAdjacent(m_pos.x, m_pos.y, newX, newY) && "illegal move");
         m_pos = {newX, newY};
         m_path.push_back(Step{timeStep, newX, newY, valueCollected});
     }

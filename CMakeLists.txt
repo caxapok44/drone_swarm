@@ -8,9 +8,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_subdirectory(app)
 
-#include(CTest)
-#if (BUILD_TESTING)
-#  add_subdirectory(tests)
-#endif()
+include(CTest)
+if (BUILD_TESTING)
+  add_subdirectory(tests)
+endif()
 
 

@@ -1,7 +1,6 @@
 #pragma once
 #include <span>
 
-// Forward declarations
 class Grid;
 class Drone;
 

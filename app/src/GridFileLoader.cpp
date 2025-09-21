@@ -85,8 +85,8 @@ Grid GridFileLoader::parseText(const std::string& text, double regrowthRate) {
         throw GridLoadError("N must be positive");
     }
 
-    // Guard against overflow / excessive allocation (choose a sane upper bound)
-    constexpr int kMaxN = 10'000; // example; adjust to domain constraints
+    // Guard against overflow 
+    constexpr int kMaxN = 10'000;
     if (N > kMaxN) {
         throw GridLoadError("N too large: " + std::to_string(N));
     }
@@ -130,7 +130,7 @@ Grid GridFileLoader::parseText(const std::string& text, double regrowthRate) {
             inc = 1; // ensure minimal positive increment when regrowth enabled
         }
         if (regrowthRate == 0.0) {
-            inc = 0; // explicit for clarity
+            inc = 0; 
         }
         g.inc[i] = inc;
     }

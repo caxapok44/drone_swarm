@@ -1,7 +1,6 @@
 #pragma once
 #include <cstdint>
 
-// Domain aliases kept simple (узгоджені з Grid/Result)
 using TimeStep  = int;
 using CellValue = int;
 

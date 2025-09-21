@@ -3,17 +3,13 @@
 #include <ostream>
 #include <sstream>
 #include <locale>
-#include <algorithm> // for std::max
+#include <algorithm>
 #include "../struct/Result.h"
 
 namespace io {
 
-// Write JSON to a stream; pretty = human-readable, otherwise compact.
 inline std::ostream& write_json(std::ostream& os, const RunResult& r,
                                 bool pretty = true, int indent_size = 2) {
-    // Ensure locale-independent digits (e.g., no grouped thousands)
-    os.imbue(std::locale::classic());
-
     const char* nl = pretty ? "\n" : "";
     const char* sp = pretty ? " "  : "";
     const std::string indent_unit(pretty ? std::max(0, indent_size) : 0, ' ');
@@ -60,7 +56,6 @@ inline std::ostream& write_json(std::ostream& os, const RunResult& r,
     return os;
 }
 
-// Convenience: produce a std::string
 inline std::string to_json(const RunResult& r, bool pretty = true, int indent_size = 2) {
     std::ostringstream oss;
     write_json(oss, r, pretty, indent_size);
