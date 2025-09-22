@@ -1,6 +1,6 @@
 # Assessment 1
 
-*** is working on an advanced drone swarm that can independently monitor an area. To be able to search an area effectively, we use a world model. An example of this can be a grid, divided into equal planes, where each plane in the grid is provided with a numerical value. This value then might represent the information contained in that plane. When a drone flies a path, it adds up the values of all the planes it passes, the result is the total value of the path. The longer you have not been somewhere, the greater the chance that the situation has changed. You can represent this by slowly increasing the value of the plane to the original value after you have visited a plane. Adjust your model and algorithm to deal with this.
+ To be able to search an area effectively, we use a world model. An example of this can be a grid, divided into equal planes, where each plane in the grid is provided with a numerical value. This value then might represent the information contained in that plane. When a drone flies a path, it adds up the values of all the planes it passes, the result is the total value of the path. The longer you have not been somewhere, the greater the chance that the situation has changed. You can represent this by slowly increasing the value of the plane to the original value after you have visited a plane. Adjust your model and algorithm to deal with this.
 
 ### Assignment
 
